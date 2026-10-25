@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+exchange_data.json
+*.tmp
