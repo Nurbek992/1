@@ -1,141 +1,107 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="690" viewBox="0 0 1100 690" font-family="Arial, Helvetica, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="980" viewBox="0 0 1100 980" font-family="Arial, Helvetica, sans-serif">
   <defs>
-    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
-    </marker>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+    <marker id="ref" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
   </defs>
-
-  <rect width="1100" height="690" fill="#FFFFFF"/>
-  <text x="550" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#0F172A">Схема чат-бота и фоновых workflow в n8n</text>
-  <text x="550" y="60" text-anchor="middle" font-size="13" fill="#475569">Стрелки показывают порядок шагов внутри каждого workflow</text>
-
-  <!-- Группы -->
-  <rect x="20" y="80" width="1060" height="200" rx="10" fill="#FAFAFA" stroke="#94A3B8" stroke-dasharray="6 4"/>
-  <text x="36" y="102" font-size="15" font-weight="bold" fill="#0F172A">1. Чат-бот: НЕ ГОТОВ, запись в таблицу и календарь ещё не подключена</text>
-
-  <rect x="20" y="296" width="1060" height="96" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
-  <text x="36" y="318" font-size="15" font-weight="bold" fill="#0F172A">2. Ошибки: error-alert-workflow.json</text>
-
-  <rect x="20" y="408" width="1060" height="96" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
-  <text x="36" y="430" font-size="15" font-weight="bold" fill="#0F172A">3. Синхронизация ручных записей из календаря: calendar-sync-workflow.json</text>
-
-  <rect x="20" y="520" width="1060" height="96" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
-  <text x="36" y="542" font-size="15" font-weight="bold" fill="#0F172A">4. Напоминания клиентам: reminders-workflow.json</text>
-
-  <!-- Workflow 1: чат-бот -->
-  <rect x="60" y="116" width="170" height="52" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="145" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Webhook</text>
-  <text x="145" y="154" text-anchor="middle" font-size="11" fill="#334155">Whapi: входящее</text>
-
-  <rect x="270" y="116" width="170" height="52" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-  <text x="355" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Не своё сообщение?</text>
-  <text x="355" y="154" text-anchor="middle" font-size="11" fill="#334155">фильтр: IF</text>
-
-  <rect x="480" y="116" width="170" height="52" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-  <text x="565" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Извлечь данные</text>
-  <text x="565" y="154" text-anchor="middle" font-size="11" fill="#334155">телефон, текст</text>
-
-  <rect x="690" y="116" width="170" height="52" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
-  <text x="775" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">AI Agent</text>
-  <text x="775" y="154" text-anchor="middle" font-size="11" fill="#334155">Claude + память</text>
-
-  <rect x="900" y="116" width="170" height="52" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
-  <text x="985" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Ответ клиенту</text>
-  <text x="985" y="154" text-anchor="middle" font-size="11" fill="#334155">Whapi: отправка</text>
-
-  <rect x="640" y="190" width="130" height="36" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="5 3"/>
-  <text x="705" y="212" text-anchor="middle" font-size="12" fill="#0F172A">Calendar: запись</text>
-  <rect x="790" y="190" width="130" height="36" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="5 3"/>
-  <text x="855" y="212" text-anchor="middle" font-size="12" fill="#0F172A">Sheets: запись</text>
-
-  <line x1="230" y1="142" x2="270" y2="142" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="440" y1="142" x2="480" y2="142" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="650" y1="142" x2="690" y2="142" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="860" y1="142" x2="900" y2="142" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="775" y1="168" x2="705" y2="190" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
-  <line x1="775" y1="168" x2="855" y2="190" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
-
-  <!-- Workflow 2: ошибки -->
-  <rect x="60" y="332" width="170" height="52" rx="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
-  <text x="145" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Error Trigger</text>
-  <text x="145" y="370" text-anchor="middle" font-size="11" fill="#334155">ошибка в workflow</text>
-
-  <rect x="270" y="332" width="170" height="52" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-  <text x="355" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Текст ошибки</text>
-  <text x="355" y="370" text-anchor="middle" font-size="11" fill="#334155">название, нода, текст</text>
-
-  <rect x="480" y="332" width="170" height="52" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
-  <text x="565" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Ответ админу</text>
-  <text x="565" y="370" text-anchor="middle" font-size="11" fill="#334155">Whapi: админу</text>
-
-  <line x1="230" y1="358" x2="270" y2="358" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="440" y1="358" x2="480" y2="358" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-
-  <!-- Workflow 3: синхронизация календаря -->
-  <rect x="60" y="444" width="170" height="52" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="145" y="466" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таймер</text>
-  <text x="145" y="482" text-anchor="middle" font-size="11" fill="#334155">каждые 15 минут</text>
-
-  <rect x="270" y="444" width="170" height="52" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="355" y="466" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Календарь</text>
-  <text x="355" y="482" text-anchor="middle" font-size="11" fill="#334155">события на 60 дней</text>
-
-  <rect x="480" y="444" width="170" height="52" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="565" y="466" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таблица: читать</text>
-  <text x="565" y="482" text-anchor="middle" font-size="11" fill="#334155">строки «Записи»</text>
-
-  <rect x="690" y="444" width="170" height="52" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-  <text x="775" y="466" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Новые события</text>
-  <text x="775" y="482" text-anchor="middle" font-size="11" fill="#334155">нет в таблице</text>
-
-  <rect x="900" y="444" width="170" height="52" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="985" y="466" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таблица: добавить</text>
-  <text x="985" y="482" text-anchor="middle" font-size="11" fill="#334155">строка с event_id</text>
-
-  <line x1="230" y1="470" x2="270" y2="470" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="440" y1="470" x2="480" y2="470" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="650" y1="470" x2="690" y2="470" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="860" y1="470" x2="900" y2="470" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-
-  <!-- Workflow 4: напоминания -->
-  <rect x="60" y="556" width="170" height="52" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
-  <text x="145" y="578" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таймер</text>
-  <text x="145" y="594" text-anchor="middle" font-size="11" fill="#334155">ежедневно в 18:00</text>
-
-  <rect x="270" y="556" width="170" height="52" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="355" y="578" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таблица: читать</text>
-  <text x="355" y="594" text-anchor="middle" font-size="11" fill="#334155">строки «Записи»</text>
-
-  <rect x="480" y="556" width="170" height="52" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-  <text x="565" y="578" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Фильтр: завтра</text>
-  <text x="565" y="594" text-anchor="middle" font-size="11" fill="#334155">не отправлено, есть телефон</text>
-
-  <rect x="690" y="556" width="170" height="52" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
-  <text x="775" y="578" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Ответ клиенту</text>
-  <text x="775" y="594" text-anchor="middle" font-size="11" fill="#334155">Whapi: напоминание</text>
-
-  <rect x="900" y="556" width="170" height="52" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-  <text x="985" y="578" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Таблица: статус</text>
-  <text x="985" y="594" text-anchor="middle" font-size="11" fill="#334155">напоминание отправлено</text>
-
-  <line x1="230" y1="582" x2="270" y2="582" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="440" y1="582" x2="480" y2="582" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="650" y1="582" x2="690" y2="582" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-  <line x1="860" y1="582" x2="900" y2="582" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
-
-  <!-- Легенда -->
-  <rect x="60" y="640" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#16A34A"/>
-  <text x="84" y="653" font-size="12" fill="#334155">Триггер</text>
-  <rect x="170" y="640" width="16" height="16" rx="3" fill="#F1F5F9" stroke="#64748B"/>
-  <text x="194" y="653" font-size="12" fill="#334155">Логика</text>
-  <rect x="270" y="640" width="16" height="16" rx="3" fill="#DBEAFE" stroke="#2563EB"/>
-  <text x="294" y="653" font-size="12" fill="#334155">Google Sheets / Calendar</text>
-  <rect x="470" y="640" width="16" height="16" rx="3" fill="#FEF3C7" stroke="#D97706"/>
-  <text x="494" y="653" font-size="12" fill="#334155">WhatsApp (Whapi)</text>
-  <rect x="640" y="640" width="16" height="16" rx="3" fill="#EDE9FE" stroke="#7C3AED"/>
-  <text x="664" y="653" font-size="12" fill="#334155">AI</text>
-  <rect x="700" y="640" width="16" height="16" rx="3" fill="#FEE2E2" stroke="#DC2626"/>
-  <text x="724" y="653" font-size="12" fill="#334155">Ошибка</text>
-  <rect x="790" y="640" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#2563EB" stroke-dasharray="4 2"/>
-  <text x="814" y="653" font-size="12" fill="#334155">Пунктир: ещё не построено</text>
+  <rect width="1100" height="980" fill="#FFFFFF"/>
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#0F172A">Как соединены ноды в workflow</text>
+  <text x="550" y="60" text-anchor="middle" font-size="13" fill="#475569">Имена нод такие же, как в импортируемых JSON-файлах</text>
+  <rect x="20" y="70" width="1060" height="260" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
+  <text x="36" y="92" font-size="15" font-weight="bold" fill="#0F172A">A. Чат-бот: chat-bot-workflow.json</text>
+  <rect x="60" y="130" width="180" height="54" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="150.0" y="152" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Chat Trigger</text>
+  <text x="150.0" y="168" text-anchor="middle" font-size="11" fill="#334155">вход из чата n8n</text>
+  <rect x="340" y="130" width="200" height="54" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="440.0" y="152" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">AI Agent</text>
+  <text x="440.0" y="168" text-anchor="middle" font-size="11" fill="#334155">Claude, системный промпт</text>
+  <line x1="240" y1="157" x2="340" y2="157" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="100" y="240" width="170" height="54" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="185.0" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Anthropic Chat Model</text>
+  <text x="185.0" y="278" text-anchor="middle" font-size="11" fill="#334155">ai_languageModel</text>
+  <rect x="300" y="240" width="170" height="54" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="385.0" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Window Buffer Memory</text>
+  <text x="385.0" y="278" text-anchor="middle" font-size="11" fill="#334155">ai_memory</text>
+  <rect x="500" y="240" width="170" height="54" rx="8" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="585.0" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Google Calendar</text>
+  <text x="585.0" y="278" text-anchor="middle" font-size="11" fill="#334155">ai_tool (план)</text>
+  <rect x="700" y="240" width="170" height="54" rx="8" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="785.0" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Google Sheets</text>
+  <text x="785.0" y="278" text-anchor="middle" font-size="11" fill="#334155">ai_tool (план)</text>
+  <line x1="185" y1="240" x2="440" y2="184" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="385" y1="240" x2="440" y2="184" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="585" y1="240" x2="440" y2="184" stroke="#64748B" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <line x1="785" y1="240" x2="440" y2="184" stroke="#64748B" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <text x="36" y="318" font-size="12" fill="#334155">Пока не в файле: вход Whapi → IF → Edit Fields (заменит Chat Trigger), ответ через HTTP Request в Whapi.</text>
+  <rect x="20" y="350" width="1060" height="150" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
+  <text x="36" y="372" font-size="15" font-weight="bold" fill="#0F172A">B. Ошибки: error-alert-workflow.json</text>
+  <rect x="60" y="400" width="200" height="54" rx="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="160.0" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Error Trigger</text>
+  <text x="160.0" y="438" text-anchor="middle" font-size="11" fill="#334155">ошибка в любом workflow</text>
+  <rect x="340" y="400" width="200" height="54" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+  <text x="440.0" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Format Alert</text>
+  <text x="440.0" y="438" text-anchor="middle" font-size="11" fill="#334155">Code: текст сообщения</text>
+  <rect x="620" y="400" width="200" height="54" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="720.0" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Send Admin Alert</text>
+  <text x="720.0" y="438" text-anchor="middle" font-size="11" fill="#334155">HTTP: Whapi, админу</text>
+  <line x1="260" y1="427" x2="340" y2="427" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="540" y1="427" x2="620" y2="427" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="36" y="486" font-size="12" fill="#334155">Подключение: в каждом workflow Settings → Error Workflow = «Ошибки: уведомление администратора».</text>
+  <rect x="20" y="520" width="1060" height="180" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
+  <text x="36" y="542" font-size="15" font-weight="bold" fill="#0F172A">C. Синхронизация ручных записей: calendar-sync-workflow.json</text>
+  <rect x="40" y="570" width="170" height="54" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="125.0" y="592" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Schedule Trigger</text>
+  <text x="125.0" y="608" text-anchor="middle" font-size="11" fill="#334155">каждые 15 минут</text>
+  <rect x="250" y="570" width="170" height="54" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="335.0" y="592" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Get Calendar Events</text>
+  <text x="335.0" y="608" text-anchor="middle" font-size="11" fill="#334155">Google Calendar getAll</text>
+  <rect x="460" y="570" width="170" height="54" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="545.0" y="592" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Read Sheet</text>
+  <text x="545.0" y="608" text-anchor="middle" font-size="11" fill="#334155">Google Sheets read</text>
+  <rect x="670" y="570" width="170" height="54" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+  <text x="755.0" y="592" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Find New Events</text>
+  <text x="755.0" y="608" text-anchor="middle" font-size="11" fill="#334155">Code: нет в таблице</text>
+  <rect x="880" y="570" width="170" height="54" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="965.0" y="592" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Append to Sheet</text>
+  <text x="965.0" y="608" text-anchor="middle" font-size="11" fill="#334155">Google Sheets append</text>
+  <line x1="210" y1="597" x2="250" y2="597" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="420" y1="597" x2="460" y2="597" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="630" y1="597" x2="670" y2="597" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="840" y1="597" x2="880" y2="597" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M 335 624 L 335 660 L 755 660 L 755 624" fill="none" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#ref)"/>
+  <text x="545" y="676" text-anchor="middle" font-size="11" fill="#475569">ссылка $('Get Calendar Events'): список событий</text>
+  <rect x="20" y="720" width="1060" height="190" rx="10" fill="#FAFAFA" stroke="#CBD5E1"/>
+  <text x="36" y="742" font-size="15" font-weight="bold" fill="#0F172A">D. Напоминания клиентам: reminders-workflow.json</text>
+  <rect x="36" y="770" width="145" height="54" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="108.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Daily at 18:00</text>
+  <text x="108.5" y="808" text-anchor="middle" font-size="11" fill="#334155">Schedule, раз в день</text>
+  <rect x="211" y="770" width="145" height="54" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="283.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Read Sheet</text>
+  <text x="283.5" y="808" text-anchor="middle" font-size="11" fill="#334155">Google Sheets read</text>
+  <rect x="386" y="770" width="145" height="54" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+  <text x="458.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Tomorrow Unsent</text>
+  <text x="458.5" y="808" text-anchor="middle" font-size="11" fill="#334155">дата, статус, телефон</text>
+  <rect x="561" y="770" width="145" height="54" rx="8" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+  <text x="633.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Build Reminder</text>
+  <text x="633.5" y="808" text-anchor="middle" font-size="11" fill="#334155">Code: текст, телефон</text>
+  <rect x="736" y="770" width="145" height="54" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="808.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Send Reminder</text>
+  <text x="808.5" y="808" text-anchor="middle" font-size="11" fill="#334155">HTTP: Whapi, клиенту</text>
+  <rect x="911" y="770" width="145" height="54" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="983.5" y="792" text-anchor="middle" font-size="13" font-weight="bold" fill="#0F172A">Mark Reminded</text>
+  <text x="983.5" y="808" text-anchor="middle" font-size="11" fill="#334155">Sheets appendOrUpdate</text>
+  <line x1="181" y1="797" x2="217" y2="797" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="356" y1="797" x2="392" y2="797" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="531" y1="797" x2="567" y2="797" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="706" y1="797" x2="742" y2="797" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="881" y1="797" x2="917" y2="797" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M 633.5 824 L 633.5 862 L 983.5 862 L 983.5 824" fill="none" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#ref)"/>
+  <text x="808" y="880" text-anchor="middle" font-size="11" fill="#475569">ссылка $('Build Reminder'): event_id и текст</text>
+  <line x1="60" y1="944" x2="90" y2="944" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="98" y="948" font-size="12" fill="#334155">основная связь</text>
+  <line x1="240" y1="944" x2="270" y2="944" stroke="#64748B" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#ref)"/>
+  <text x="278" y="948" font-size="12" fill="#334155">ссылка на данные другой ноды</text>
+  <rect x="500" y="935" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#2563EB" stroke-dasharray="4 2"/>
+  <text x="524" y="948" font-size="12" fill="#334155">ещё не построено</text>
+  <rect x="660" y="935" width="16" height="16" rx="3" fill="#EDE9FE" stroke="#7C3AED"/>
+  <text x="684" y="948" font-size="12" fill="#334155">AI-нода</text>
 </svg>
