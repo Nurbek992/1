@@ -1,0 +1,179 @@
+{
+  "name": "Напоминания клиентам за день до записи",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "days", "daysInterval": 1, "triggerAtHour": 18 }]
+        }
+      },
+      "id": "7a2e0003-0001-4b00-9000-000000000001",
+      "name": "Daily at 18:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Записи"
+        },
+        "options": {}
+      },
+      "id": "7a2e0003-0002-4b00-9000-000000000001",
+      "name": "Read Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [220, 0],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "7a2e0003-c001-4b00-9000-000000000001",
+              "leftValue": "={{ $json['Дата'] }}",
+              "rightValue": "={{ $now.plus({ days: 1 }).toFormat('yyyy-MM-dd') }}",
+              "operator": { "type": "string", "operation": "equals" }
+            },
+            {
+              "id": "7a2e0003-c002-4b00-9000-000000000001",
+              "leftValue": "={{ $json['Статус'] }}",
+              "rightValue": "запланировано",
+              "operator": { "type": "string", "operation": "equals" }
+            },
+            {
+              "id": "7a2e0003-c003-4b00-9000-000000000001",
+              "leftValue": "={{ $json['Телефон'] }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7a2e0003-0003-4b00-9000-000000000001",
+      "name": "Tomorrow Unsent",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(i => {\n  const r = i.json;\n  const phone = String(r['Телефон']).replace(/\\D/g, '');\n  const text = `Здравствуйте, ${r['Имя']}! Напоминаем о записи завтра, ${r['Дата']} в ${r['Время']}. Услуга: ${r['Услуга']}. Ждём вас!`;\n  return { json: { event_id: r.event_id, phone, text } };\n});"
+      },
+      "id": "7a2e0003-0004-4b00-9000-000000000001",
+      "name": "Build Reminder",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://gate.whapi.cloud/messages/text",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ to: $json.phone, body: $json.text }) }}",
+        "options": {}
+      },
+      "id": "7a2e0003-0005-4b00-9000-000000000001",
+      "name": "Send Reminder",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 0],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "REPLACE_WHAPI_CREDENTIAL_ID",
+          "name": "Whapi token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Записи"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "event_id": "={{ $('Build Reminder').item.json.event_id }}",
+            "Статус": "напоминание отправлено"
+          },
+          "matchingColumns": ["event_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "7a2e0003-0006-4b00-9000-000000000001",
+      "name": "Mark Reminded",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1100, 0],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily at 18:00": {
+      "main": [[{ "node": "Read Sheet", "type": "main", "index": 0 }]]
+    },
+    "Read Sheet": {
+      "main": [[{ "node": "Tomorrow Unsent", "type": "main", "index": 0 }]]
+    },
+    "Tomorrow Unsent": {
+      "main": [[{ "node": "Build Reminder", "type": "main", "index": 0 }]]
+    },
+    "Build Reminder": {
+      "main": [[{ "node": "Send Reminder", "type": "main", "index": 0 }]]
+    },
+    "Send Reminder": {
+      "main": [[{ "node": "Mark Reminded", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Moscow"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

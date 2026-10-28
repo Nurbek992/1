@@ -1,0 +1,139 @@
+{
+  "name": "Календарь: синхронизация ручных записей в таблицу",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 15 }]
+        }
+      },
+      "id": "7a2e0002-0001-4b00-9000-000000000001",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_CALENDAR_ID"
+        },
+        "returnAll": true,
+        "options": {
+          "timeMin": "={{ $now.minus({ days: 1 }).toISO() }}",
+          "timeMax": "={{ $now.plus({ days: 60 }).toISO() }}",
+          "singleEvents": true
+        }
+      },
+      "id": "7a2e0002-0002-4b00-9000-000000000001",
+      "name": "Get Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [220, 0],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "REPLACE_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Записи"
+        },
+        "options": {}
+      },
+      "id": "7a2e0002-0003-4b00-9000-000000000001",
+      "name": "Read Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [440, 0],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const known = new Set($input.all().map(i => i.json.event_id));\nreturn $('Get Calendar Events').all()\n  .filter(i => !known.has(i.json.id) && i.json.status !== 'cancelled')\n  .map(i => {\n    const e = i.json;\n    const start = e.start.dateTime ?? e.start.date;\n    return { json: {\n      event_id: e.id,\n      'Дата создания': new Date().toISOString(),\n      'Имя': e.summary ?? '',\n      'Телефон': '',\n      'Услуга': e.description ?? '',\n      'Дата': start.slice(0, 10),\n      'Время': e.start.dateTime ? start.slice(11, 16) : '',\n      'Статус': 'запланировано',\n      'Источник': 'календарь'\n    } };\n  });"
+      },
+      "id": "7a2e0002-0004-4b00-9000-000000000001",
+      "name": "Find New Events",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE_WITH_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Записи"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "7a2e0002-0005-4b00-9000-000000000001",
+      "name": "Append to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [880, 0],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [[{ "node": "Get Calendar Events", "type": "main", "index": 0 }]]
+    },
+    "Get Calendar Events": {
+      "main": [[{ "node": "Read Sheet", "type": "main", "index": 0 }]]
+    },
+    "Read Sheet": {
+      "main": [[{ "node": "Find New Events", "type": "main", "index": 0 }]]
+    },
+    "Find New Events": {
+      "main": [[{ "node": "Append to Sheet", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Moscow"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

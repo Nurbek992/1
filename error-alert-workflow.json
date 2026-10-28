@@ -1,0 +1,63 @@
+{
+  "name": "Ошибки: уведомление администратора",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7a2e0001-0001-4b00-9000-000000000001",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const ADMIN_PHONE = 'REPLACE_ADMIN_PHONE';\nconst e = $json.execution;\nconst text = `⚠️ Ошибка в workflow «${$json.workflow.name}»\\nНода: ${e.lastNodeExecuted}\\nТекст: ${e.error.message}\\nЗапуск: ${e.url}`;\nreturn [{ json: { phone: ADMIN_PHONE, text } }];"
+      },
+      "id": "7a2e0001-0002-4b00-9000-000000000001",
+      "name": "Format Alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://gate.whapi.cloud/messages/text",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ to: $json.phone, body: $json.text }) }}",
+        "options": {}
+      },
+      "id": "7a2e0001-0003-4b00-9000-000000000001",
+      "name": "Send Admin Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 0],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "REPLACE_WHAPI_CREDENTIAL_ID",
+          "name": "Whapi token"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [[{ "node": "Format Alert", "type": "main", "index": 0 }]]
+    },
+    "Format Alert": {
+      "main": [[{ "node": "Send Admin Alert", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
